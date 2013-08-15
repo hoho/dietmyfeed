@@ -21,8 +21,8 @@ These steps are for Ubuntu 12.04:
   * `git clone git://github.com/hoho/dietmyfeed.git`.
   * `sudo make apt-get-deps`.
   * `make download-custom-deps`.
-  * `make build-custom-deps`.
-  * `sudo make install-custom-deps`.
+  * `sudo make custom-deps`.
+  * `make build`.
   * `sudo make install`.
   * set your own values for `xrlt_param fb-id`, `xrlt_param fb-secret`, `xrlt_param index-url` and `xrlt_param auth-url` in `/etc/dietmyfeed/nginx.conf`.
   * `sudo /etc/init.d/dietmyfeed start`
