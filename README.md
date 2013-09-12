@@ -22,7 +22,6 @@ These steps are for Ubuntu 12.04:
   * `sudo make apt-get-deps`.
   * `make download-custom-deps`.
   * `sudo make custom-deps`.
-  * `make build`.
   * `sudo make install`.
   * set your own values for `xrlt_param fb-id`, `xrlt_param fb-secret`, `xrlt_param index-url` and `xrlt_param auth-url` in `/etc/dietmyfeed/nginx.conf`.
   * `sudo /etc/init.d/dietmyfeed start`

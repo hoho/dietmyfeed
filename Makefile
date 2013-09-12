@@ -6,7 +6,7 @@ clean:
 	rm -rf .build
 
 apt-get-deps:
-	apt-get install git subversion g++ make libxml2-dev libxslt-dev ruby cmake curl libpcre3 libpcre3-dev libssl-dev
+	apt-get install git subversion g++ make libxml2-dev libxslt-dev ruby cmake curl libpcre3 libpcre3-dev libssl-dev python-setuptools
 
 download-custom-deps:
 	mkdir .deps
@@ -26,11 +26,9 @@ custom-deps:
 	$(MAKE) -C .deps/yajl install
 	$(MAKE) -C .deps/xrlt/libxrlt
 	$(MAKE) -C .deps/xrlt/libxrlt install
-
-build:
 	cd .deps/nginx-1.4.2 && ./configure --prefix=/usr/local/www/dietmyfeed/nginx \
 	                                    --conf-path=/etc/dietmyfeed/nginx.conf \
-	                                    --sbin-path=/usr/local/www/dietmyfeed/nginx/bin/nginx \
+	                                    --sbin-path=/usr/local/www/dietmyfeed/bin/nginx \
 	                                    --http-log-path=/var/log/dietmyfeed/access.log \
 	                                    --error-log-path=/var/log/dietmyfeed/error.log \
 	                                    --pid-path=/var/run/dietmyfeed.pid \
