@@ -4,6 +4,7 @@ help:
 clean:
 	rm -rf .deps
 	rm -rf .build
+	rm -rf .www
 
 apt-get-deps:
 	apt-get install git subversion g++ make libxml2-dev libxslt-dev ruby cmake curl libpcre3 libpcre3-dev libssl-dev python-setuptools
@@ -26,9 +27,9 @@ custom-deps:
 	$(MAKE) -C .deps/yajl install
 	$(MAKE) -C .deps/xrlt/libxrlt
 	$(MAKE) -C .deps/xrlt/libxrlt install
-	cd .deps/nginx-1.4.2 && ./configure --prefix=/usr/local/www/dietmyfeed/nginx \
+	cd .deps/nginx-1.4.2 && ./configure --prefix=/usr/local/dietmyfeed/nginx \
 	                                    --conf-path=/etc/dietmyfeed/nginx.conf \
-	                                    --sbin-path=/usr/local/www/dietmyfeed/bin/nginx \
+	                                    --sbin-path=/usr/local/dietmyfeed/bin/nginx \
 	                                    --http-log-path=/var/log/dietmyfeed/access.log \
 	                                    --error-log-path=/var/log/dietmyfeed/error.log \
 	                                    --pid-path=/var/run/dietmyfeed.pid \
@@ -37,6 +38,20 @@ custom-deps:
 	                                    --with-cc-opt="-I/usr/include/libxml2 -I../xrlt/libxrlt" \
 	                                    --with-ld-opt="-L/usr/local/lib -lxml2 -lyajl -lxrlt" \
 	                                    && make
+	easy_install xbem
 
 install:
 	$(MAKE) -C .deps/nginx-1.4.2 install
+	mkdir -p /var/log/dietmyfeed
+	mkdir -p /etc/dietmyfeed
+	cd src && xbem
+	mkdir -p /usr/local/dietmyfeed/www
+	cp nginx/nginx.conf /etc/dietmyfeed/nginx.conf
+
+start:
+	@echo "Starting nginx..."
+	/usr/local/dietmyfeed/bin/nginx -c /etc/dietmyfeed/nginx.conf
+
+stop:
+	@echo "Stopping nginx..."
+	/usr/local/dietmyfeed/bin/nginx -c /etc/dietmyfeed/nginx.conf -s stop
