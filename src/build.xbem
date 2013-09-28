@@ -6,6 +6,12 @@
     <build:repository>./blocks/blocks.xbem</build:repository>
 
     <build:xrl>
+        <build:file>./pages/about/about.xrl</build:file>
+        <build:templates>../.www/private/about/</build:templates>
+        <build:out>../.www/private/about/about.xrl</build:out>
+    </build:xrl>
+
+    <build:xrl>
         <build:file>./pages/index/index.xrl</build:file>
         <build:templates>../.www/private/index/</build:templates>
         <build:out>../.www/private/index/index.xrl</build:out>
