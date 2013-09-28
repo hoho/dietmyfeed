@@ -12,7 +12,7 @@ apt-get-deps:
 download-custom-deps:
 	mkdir .deps
 	git clone https://github.com/hoho/xrlt.git .deps/xrlt
-	git clone https://github.com/v8/v8.git .deps/v8 && cd .deps/v8 && git co 3.20.17
+	git clone https://github.com/v8/v8.git .deps/v8 && cd .deps/v8 && git checkout 3.20.17
 	$(MAKE) -C .deps/v8 dependencies
 	git clone https://github.com/lloyd/yajl.git .deps/yajl
 	curl -o .deps/nginx-1.4.2.tar.gz http://nginx.org/download/nginx-1.4.2.tar.gz
