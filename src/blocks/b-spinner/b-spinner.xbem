@@ -1,0 +1,38 @@
+<decl:block
+        xmlns:decl="http://xslc.org/XBEM/Declaration"
+        xmlns:dep="http://xslc.org/XBEM/Dependency"
+        version="1.0">
+
+    <decl:name>b-spinner</decl:name>
+
+    <decl:files>
+        <decl:css>
+            <decl:file>b-spinner.css</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:css>
+
+        <decl:js>
+            <decl:file>b-spinner.js</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:js>
+
+        <decl:xsl>
+            <decl:file>b-spinner.xsl</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:xsl>
+
+        <decl:image>
+            <decl:file>b-spinner.png</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:image>
+    </decl:files>
+
+    <dep:block>
+        <dep:name>i-jquery</dep:name>
+
+        <dep:element>
+            <dep:name>bem</dep:name>
+        </dep:element>
+    </dep:block>
+
+</decl:block>

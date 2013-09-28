@@ -1,0 +1,25 @@
+<decl:block
+        xmlns:decl="http://xslc.org/XBEM/Declaration"
+        version="1.0">
+
+    <decl:name>i-jquery</decl:name>
+
+    <decl:files>
+        <decl:js>
+            <decl:file>http://code.jquery.com/jquery-1.10.2.min.js</decl:file>
+            <decl:bundle>libs</decl:bundle>
+        </decl:js>
+    </decl:files>
+
+    <decl:element>
+        <decl:name>bem</decl:name>
+
+        <decl:files>
+            <decl:js>
+                <decl:file>https://raw.github.com/hoho/jquery-bem/master/jquery-bem.min.js</decl:file>
+                <decl:bundle>libs</decl:bundle>
+            </decl:js>
+        </decl:files>
+    </decl:element>
+
+</decl:block>

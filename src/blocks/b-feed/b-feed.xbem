@@ -1,0 +1,42 @@
+<decl:block
+        xmlns:decl="http://xslc.org/XBEM/Declaration"
+        xmlns:dep="http://xslc.org/XBEM/Dependency"
+        version="1.0">
+
+    <decl:name>b-feed</decl:name>
+
+    <decl:files>
+        <decl:xsl>
+            <decl:file>b-feed.xsl</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:xsl>
+
+        <decl:css>
+            <decl:file>b-feed.css</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:css>
+
+        <decl:js>
+            <decl:file>b-feed.js</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:js>
+    </decl:files>
+    
+    <decl:modifier>
+        <decl:name>loader</decl:name>
+    </decl:modifier>
+
+
+    <dep:block>
+        <dep:name>i-jquery</dep:name>
+
+        <dep:element>
+            <dep:name>bem</dep:name>
+        </dep:element>
+    </dep:block>
+
+    <dep:block>
+        <dep:name>b-spinner</dep:name>
+    </dep:block>
+
+</decl:block>

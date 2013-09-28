@@ -1,0 +1,39 @@
+.b-page__cover
+{
+
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .3);
+
+    height: 100px;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+.b-page__cover div
+{
+    background: #3b5998;
+
+    height: 2100px;
+
+    left: -3%;
+
+    line-height: 2100px;
+
+    position: absolute;
+
+    top: -1000px;
+
+    width: 106%;
+
+    z-index: -1;
+}
+
+.b-page__cover img
+{
+    height: auto;
+
+    vertical-align: middle;
+
+    width: 100%;
+}

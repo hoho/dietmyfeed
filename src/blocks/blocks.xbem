@@ -1,0 +1,25 @@
+<repo:blocks
+        xmlns:repo="http://xslc.org/XBEM/Repository"
+        version="1.0">
+
+    <repo:block>
+        <repo:name>i-jquery</repo:name>
+        <repo:file>i-jquery/i-jquery.xbem</repo:file>
+    </repo:block>
+
+    <repo:block>
+        <repo:name>b-page</repo:name>
+        <repo:file>b-page/b-page.xbem</repo:file>
+    </repo:block>
+
+    <repo:block>
+        <repo:name>b-feed</repo:name>
+        <repo:file>b-feed/b-feed.xbem</repo:file>
+    </repo:block>
+
+    <repo:block>
+        <repo:name>b-spinner</repo:name>
+        <repo:file>b-spinner/b-spinner.xbem</repo:file>
+    </repo:block>
+
+</repo:blocks>

@@ -1,0 +1,62 @@
+<build:build
+        xmlns:build="http://xslc.org/XBEM/Build"
+        version="1.0">
+
+    <build:cache>../.www/.cache</build:cache>
+    <build:repository>./blocks/blocks.xbem</build:repository>
+
+    <build:xrl>
+        <build:file>./pages/index/index.xrl</build:file>
+        <build:templates>../.www/private/index/</build:templates>
+        <build:out>../.www/private/index/index.xrl</build:out>
+    </build:xrl>
+
+    <build:build>
+        <build:xrl>
+            <build:file>./pages/auth/auth.xrl</build:file>
+            <build:templates>../.www/private/auth/</build:templates>
+            <build:out>../.www/private/auth/auth.xrl</build:out>
+        </build:xrl>
+    </build:build>
+
+    <build:xrl>
+        <build:file>./pages/feed/feed.xrl</build:file>
+        <build:templates>../.www/private/feed/</build:templates>
+        <build:out>../.www/private/feed/feed.xrl</build:out>
+    </build:xrl>
+
+    <build:xrl>
+        <build:file>./pages/off/off.xrl</build:file>
+        <build:templates>../.www/private/off/</build:templates>
+        <build:out>../.www/private/off/off.xrl</build:out>
+    </build:xrl>
+
+    <build:bundle>
+        <build:name>libs</build:name>
+
+        <build:js>
+            <build:out>../.www/public/_/libs.js</build:out>
+            <build:rel>/_/libs.js</build:rel>
+        </build:js>
+    </build:bundle>
+
+    <build:bundle>
+        <build:name>components</build:name>
+
+        <build:js>
+            <build:out>../.www/public/_/_.js</build:out>
+            <build:rel>/_/_.js</build:rel>
+        </build:js>
+
+        <build:css>
+            <build:out>../.www/public/_/_.css</build:out>
+            <build:rel>/_/_.css</build:rel>
+        </build:css>
+
+        <build:image>
+            <build:out>../.www/public/_/</build:out>
+            <build:rel>/_/</build:rel>
+        </build:image>
+    </build:bundle>
+
+</build:build>

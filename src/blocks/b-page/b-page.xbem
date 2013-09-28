@@ -1,0 +1,78 @@
+<decl:block
+        xmlns:decl="http://xslc.org/XBEM/Declaration"
+        xmlns:dep="http://xslc.org/XBEM/Dependency"
+        version="1.0">
+
+    <decl:name>b-page</decl:name>
+
+    <decl:files>
+        <decl:css>
+            <decl:file>b-page.css</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:css>
+
+        <decl:js>
+            <decl:file>b-page.js</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:js>
+
+        <decl:xsl>
+            <decl:file>b-page.xsl</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:xsl>
+    </decl:files>
+    
+    <decl:element>
+        <decl:name>title</decl:name>
+    </decl:element>
+
+    <decl:element>
+        <decl:name>menu</decl:name>
+    </decl:element>
+
+    <decl:element>
+        <decl:name>menu-item</decl:name>
+        <decl:modifier>
+            <decl:name>log-off</decl:name>
+        </decl:modifier>
+    </decl:element>
+    
+    <decl:element>
+        <decl:name>avatar</decl:name>
+    </decl:element>
+    
+    <decl:element>
+        <decl:name>cover</decl:name>
+
+        <decl:files>
+            <decl:css>
+                <decl:file>b-page__cover.css</decl:file>
+                <decl:bundle>components</decl:bundle>
+            </decl:css>
+
+            <decl:js>
+                <decl:file>b-page__cover.js</decl:file>
+                <decl:bundle>components</decl:bundle>
+            </decl:js>
+
+            <decl:image>
+                <decl:file>b-page__cover.jpg</decl:file>
+                <decl:bundle>components</decl:bundle>
+            </decl:image>
+        </decl:files>
+    </decl:element>
+    
+    <decl:element>
+        <decl:name>content</decl:name>
+    </decl:element>
+
+
+    <dep:block>
+        <dep:name>i-jquery</dep:name>
+
+        <dep:element>
+            <dep:name>bem</dep:name>
+        </dep:element>
+    </dep:block>
+
+</decl:block>
