@@ -18,7 +18,7 @@
                     <xrl:href>/fb/me</xrl:href>
                     <xrl:type>json</xrl:type>
 
-                    <xrl:with-param name="fields">name,first_name,last_name,username,cover,picture</xrl:with-param>
+                    <xrl:with-param name="fields">name,first_name,last_name,username,cover,picture,timezone</xrl:with-param>
                     <xrl:with-param name="access_token" select="$session-cookie/fb/text()" />
 
                     <xrl:success>
@@ -29,6 +29,7 @@
                                 <last-name><xrl:value-of select="/last_name/text()" /></last-name>
                                 <cover><xrl:value-of select="/cover/source/text()" /></cover>
                                 <avatar><xrl:value-of select="/picture/data/url/text()" /></avatar>
+                                <timezone><xrl:value-of select="/timezone/text()" /></timezone>
                             </xrl:when>
                             <xrl:otherwise>
                                 <failure />
@@ -54,6 +55,10 @@
                     <b:b-page>
                         <xrl:choose>
                             <xrl:when test="$login-data/name">
+                                <timezone>
+                                    <xrl:value-of select="$login-data/timezone" />
+                                </timezone>
+
                                 <e:title b:block="b-page">
                                     <title>Diet My Feed — <xrl:value-of select="$login-data/name" /></title>
                                     <first><xrl:value-of select="$login-data/first-name" /></first>
@@ -75,7 +80,7 @@
                                 </e:cover>
 
                                 <e:content b:block="b-page">
-                                    <b:b-feed m:loader="" />
+                                    <b:b-feed-loader />
                                 </e:content>
                             </xrl:when>
 

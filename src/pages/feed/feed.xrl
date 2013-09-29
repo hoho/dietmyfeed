@@ -1,7 +1,6 @@
 <xrl:requestsheet
         xmlns:xrl="http://xrlt.net/Transform"
-        xmlns:b="http://xslc.org/XBEM/Block"
-        xmlns:m="http://xslc.org/XBEM/Modifier">
+        xmlns:b="http://xslc.org/XBEM/Block">
 
     <xrl:import href="../cookie.xrl" />
 
@@ -129,11 +128,7 @@
                                     <until><xrl:value-of select="substring-after(/paging/next/text(), 'until=')" /></until>
                                 </xrl:when>
                                 <xrl:otherwise>
-                                    <feed>
-                                        <xrl:transform name="feed-html">
-                                            <b:b-feed m:empty="" />
-                                        </xrl:transform>
-                                    </feed>
+                                    <feed />
                                 </xrl:otherwise>
                             </xrl:choose>
                         </xrl:transform>

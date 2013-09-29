@@ -1,0 +1,69 @@
+<decl:block
+        xmlns:decl="http://xslc.org/XBEM/Declaration"
+        xmlns:dep="http://xslc.org/XBEM/Dependency"
+        version="1.0">
+
+    <decl:name>b-feed-loader</decl:name>
+
+    <decl:files>
+        <decl:xsl>
+            <decl:file>b-feed-loader.xsl</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:xsl>
+
+        <decl:css>
+            <decl:file>b-feed-loader.css</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:css>
+
+        <decl:js>
+            <decl:file>b-feed-loader.js</decl:file>
+            <decl:bundle>components</decl:bundle>
+        </decl:js>
+    </decl:files>
+
+    <decl:modifier>
+        <decl:name>new</decl:name>
+    </decl:modifier>
+
+    <decl:element>
+        <decl:name>new</decl:name>
+    </decl:element>
+
+    <decl:element>
+        <decl:name>feed</decl:name>
+    </decl:element>
+
+    <decl:element>
+        <decl:name>more</decl:name>
+
+        <decl:modifier>
+            <decl:name>type</decl:name>
+            <decl:value>first</decl:value>
+            <decl:value>next</decl:value>
+            <decl:value>no-more</decl:value>
+        </decl:modifier>
+
+        <decl:modifier>
+            <decl:name>loading</decl:name>
+        </decl:modifier>
+
+        <decl:modifier>
+            <decl:name>error</decl:name>
+        </decl:modifier>
+    </decl:element>
+
+
+    <dep:block>
+        <dep:name>i-jquery</dep:name>
+
+        <dep:element>
+            <dep:name>bem</dep:name>
+        </dep:element>
+    </dep:block>
+
+    <dep:block>
+        <dep:name>b-spinner</dep:name>
+    </dep:block>
+
+</decl:block>

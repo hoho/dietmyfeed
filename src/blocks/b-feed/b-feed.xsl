@@ -6,27 +6,10 @@
         xmlns:m="http://xslc.org/XBEM/Modifier"
         exclude-result-prefixes="b e m">
 
-    <xsl:template match="b:b-feed[@m:loader]">
-        <div class="js b-feed b-feed_loader">
-            <xsl:call-template name="b:b-spinner" />
-        </div>
-    </xsl:template>
-
-
-    <xsl:template match="b:b-feed[@m:empty]">
-        <div class="b-feed b-feed_empty">No more feed</div>
-    </xsl:template>
-
-
     <xsl:template match="b:b-feed">
         <ul class="b-feed">
             <xsl:apply-templates select="item" />
         </ul>
-
-        <div class="b-feed b-feed_more">
-            <span>More feed</span>
-            <xsl:call-template name="b:b-spinner" />
-        </div>
     </xsl:template>
 
 

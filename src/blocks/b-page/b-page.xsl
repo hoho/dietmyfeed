@@ -25,6 +25,9 @@
                 <link rel="stylesheet" href="_/_.css" />
             </head>
             <body class="b-page">
+                <xsl:if test="timezone/text() != ''">
+                    <xsl:attribute name="data-tz"><xsl:value-of select="timezone" /></xsl:attribute>
+                </xsl:if>
                 <header>
                     <h1 class="b-page__title">
                         <xsl:value-of select="e:title/first" />
@@ -43,7 +46,6 @@
                                 </a>
                             </li>
                         </xsl:for-each>
-                        <!--<li><a href="/" class="current">News</a></li>-->
                     </ul>
 
                     <xsl:if test="e:avatar">

@@ -22,14 +22,6 @@
         </decl:js>
     </decl:files>
     
-    <decl:modifier>
-        <decl:name>loader</decl:name>
-    </decl:modifier>
-
-    <decl:modifier>
-        <decl:name>empty</decl:name>
-    </decl:modifier>
-
 
     <dep:block>
         <dep:name>i-jquery</dep:name>
@@ -38,9 +30,4 @@
             <dep:name>bem</dep:name>
         </dep:element>
     </dep:block>
-
-    <dep:block>
-        <dep:name>b-spinner</dep:name>
-    </dep:block>
-
 </decl:block>

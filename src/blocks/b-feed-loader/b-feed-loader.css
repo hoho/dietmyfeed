@@ -1,0 +1,84 @@
+.b-feed-loader__new,
+.b-feed-loader__more,
+.b-feed-loader__more                             .b-spinner,
+.b-feed-loader__more                             .more-feed,
+.b-feed-loader__more                             .no-more-feed,
+.b-feed-loader__more.b-feed-loader__more_loading .more-feed,
+.b-feed-loader__more.b-feed-loader__more_loading .no-more-feed
+{
+    display: none;
+}
+
+.b-feed-loader_new                 .b-feed-loader__new,
+.b-feed-loader__more_loading       .b-spinner,
+.b-feed-loader__more_type_first,
+.b-feed-loader__more_type_first    .more-feed,
+.b-feed-loader__more_type_next,
+.b-feed-loader__more_type_next     .more-feed,
+.b-feed-loader__more_type_no-more,
+.b-feed-loader__more_type_no-more  .no-more-feed,
+.b-feed-loader__more_error
+{
+    display: block;
+}
+
+.b-feed-loader__more
+{
+    border: 1px dashed #ddd;
+
+    cursor: pointer;
+
+    margin: 30px 0;
+
+    padding: 10px 0;
+
+    text-align: center;
+}
+
+.b-feed-loader__more_loading,
+.b-feed-loader__more_type_no-more
+{
+    cursor: default;
+}
+
+.b-feed-loader__more_loading,
+.b-feed-loader__more_type_first,
+.b-feed-loader__more_type_no-more
+{
+    border-color: transparent;
+}
+
+.b-feed-loader__more span
+{
+    color: #3b5998;
+
+    line-height: 42px;
+}
+
+.b-feed-loader__more_type_first:hover,
+.b-feed-loader__more_type_next:hover
+
+{
+    background: #f1f1f1;
+}
+
+.b-feed-loader__more_loading:hover
+{
+    background: transparent;
+}
+
+.b-feed-loader__more_type_first:hover span,
+.b-feed-loader__more_type_next:hover span
+{
+    text-decoration: underline;
+}
+
+.b-feed-loader__more_type_no-more span
+{
+    color: #aaa;
+}
+
+.b-feed-loader__more_error
+{
+    border-color: #8f0000;
+}

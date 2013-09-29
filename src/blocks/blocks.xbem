@@ -13,6 +13,11 @@
     </repo:block>
 
     <repo:block>
+        <repo:name>b-feed-loader</repo:name>
+        <repo:file>b-feed-loader/b-feed-loader.xbem</repo:file>
+    </repo:block>
+
+    <repo:block>
         <repo:name>b-feed</repo:name>
         <repo:file>b-feed/b-feed.xbem</repo:file>
     </repo:block>
