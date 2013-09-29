@@ -53,6 +53,7 @@ buildwww:
 	mkdir -p /usr/local/dietmyfeed/www
 	cp -r .www/private /usr/local/dietmyfeed/www/private
 	cp -r .www/public /usr/local/dietmyfeed/www/public
+	cp src/robots.txt /usr/local/dietmyfeed/www/public
 
 start:
 	@echo "Starting nginx..."
