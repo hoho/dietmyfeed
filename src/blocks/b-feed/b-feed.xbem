@@ -26,6 +26,10 @@
         <decl:name>loader</decl:name>
     </decl:modifier>
 
+    <decl:modifier>
+        <decl:name>empty</decl:name>
+    </decl:modifier>
+
 
     <dep:block>
         <dep:name>i-jquery</dep:name>

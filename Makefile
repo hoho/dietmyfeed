@@ -40,14 +40,17 @@ custom-deps:
 	                                    && make
 	easy_install xbem
 
-install:
+install: buildwww
 	$(MAKE) -C .deps/nginx-1.4.2 install
 	mkdir -p /var/log/dietmyfeed
 	mkdir -p /etc/dietmyfeed
+	cp nginx/nginx.conf /etc/dietmyfeed/nginx.conf
+
+buildwww:
 	rm -rf .www
 	cd src && xbem
+	rm -rf /usr/local/dietmyfeed/www
 	mkdir -p /usr/local/dietmyfeed/www
-	cp nginx/nginx.conf /etc/dietmyfeed/nginx.conf
 	cp -r .www/private /usr/local/dietmyfeed/www/private
 	cp -r .www/public /usr/local/dietmyfeed/www/public
 

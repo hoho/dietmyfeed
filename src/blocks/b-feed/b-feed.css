@@ -1,4 +1,150 @@
-.b-feed .b-spinner
+.b-feed_loader .b-spinner
 {
     margin-top: 100px;
+}
+
+.b-feed_more,
+.b-feed_empty
+{
+    margin: 30px 0;
+
+    padding: 10px 0;
+
+    text-align: center;
+}
+
+.b-feed_more
+{
+    border: 1px dashed #ddd;
+
+    cursor: pointer;
+}
+
+.b-feed_more span
+{
+    color: #3b5998;
+
+    line-height: 42px;
+}
+
+.b-feed_more:hover
+{
+    background: #f1f1f1;
+}
+
+.b-feed_more:hover span
+{
+    text-decoration: underline;
+}
+
+.b-feed_more .b-spinner
+{
+    display: none;
+
+    margin-top: 0;
+}
+
+.b-feed_loading
+{
+    border-color: #fff;
+
+    cursor: default;
+}
+
+.b-feed_loading:hover
+{
+    background: transparent;
+}
+
+.b-feed_loading span
+{
+    display: none;
+}
+
+.b-feed_loading .b-spinner
+{
+    display: block;
+}
+
+.b-feed_empty
+{
+    color: #aaa;
+}
+
+.b-feed__item
+{
+    border-bottom: 1px solid #eee;
+
+    min-height: 50px;
+
+    padding: 30px 0 30px 60px;
+
+    position: relative;
+}
+
+.b-feed__head
+{
+    font-size: 14px;
+
+    line-height: 100%;
+
+    margin-bottom: 5px;
+}
+
+.b-feed__head img /* Userpic. */
+{
+    margin-left: -60px;
+
+    position: absolute;
+}
+
+.b-feed__head a /* Profile name. */
+{
+    font-weight: 500;
+}
+
+.b-feed__head span /* Creation time. */
+{
+    color: #555;
+
+    float: right;
+}
+
+.b-feed__message
+{
+    white-space: pre-wrap;
+}
+
+.b-feed__actions
+{
+    font-size: 12px;
+}
+
+.b-feed__photo
+{
+    box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+
+    display: inline-block;
+
+    line-height: 0;
+
+    margin: 10px 0;
+
+    padding: 12px;
+}
+
+.b-feed__photo img
+{
+    height: auto;
+
+    max-width: 100%;
+
+    z-index: -1;
+}
+
+.b-feed__placeholder
+{
+    color: #aaa;
+
+    font-size: 9px;
 }
