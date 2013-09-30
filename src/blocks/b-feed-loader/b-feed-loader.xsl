@@ -9,7 +9,7 @@
     <xsl:template match="b:b-feed-loader">
         <div class="js b-feed-loader">
             <div class="b-feed-loader__new">
-                You have new.
+                <span>Show new feed</span>
             </div>
             <div class="b-feed-loader__feed"></div>
             <div class="b-feed-loader__more">

@@ -8,14 +8,32 @@ $.BEM.decl('b-feed-loader')
 
         self.more = self.$.find('%b-feed-loader(more)');
         self.more.bemMod('type', 'first');
-
         self.more.on('click', function() {
             if ($(this).not('{loading}').is('{type=first}, {type=next}')) {
                 self.bemCall('load', false);
             }
         });
 
+        self.feed = self.$.find('%b-feed-loader(feed)');
+
+        self.$.find('%b-feed-loader(new)').on('click', function() {
+            if (self.updates.length) {
+                self.feed.prepend(self.updates.join(''));
+                self.updates = [];
+                self.bemMod('new', false);
+            }
+        });
+
         self.bemCall('load', false);
+        self.bemCall('update');
+    })
+
+    .onCall('update', function() {
+        var self = this;
+
+        window.setTimeout(function() {
+            self.bemCall(self.since ? 'load' : 'update', true);
+        }, 30000);
     })
 
     .onCall('load', function(update) {
@@ -43,11 +61,12 @@ $.BEM.decl('b-feed-loader')
                 if (update) {
                     if (data.feed) {
                         self.updates.unshift(data.feed);
+                        self.bemMod('new', true);
                     }
                 } else {
                     if (data.feed) {
                         self.more.bemMod('type', 'next');
-                        self.$.find('%b-feed-loader(feed)').append(data.feed);
+                        self.feed.append(data.feed);
                     } else {
                         self.more.bemMod('type', 'no-more');
                     }
@@ -59,7 +78,9 @@ $.BEM.decl('b-feed-loader')
                 }
             },
             complete: function() {
-                if (!update) {
+                if (update) {
+                    self.bemCall('update');
+                } else {
                     self.more.bemMod('loading', false);
                 }
             }

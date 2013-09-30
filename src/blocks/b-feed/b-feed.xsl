@@ -55,7 +55,7 @@
                 </xsl:when>
 
                 <xsl:otherwise>
-                    <div class="b-feed__placeholder">Here be dragons</div>
+                    <div class="b-feed__placeholder">Here be dragons: <xsl:value-of select="type/text()" /></div>
                 </xsl:otherwise>
             </xsl:choose>
 

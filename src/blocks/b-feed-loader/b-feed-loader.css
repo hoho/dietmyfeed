@@ -22,9 +22,10 @@
     display: block;
 }
 
-.b-feed-loader__more
+.b-feed-loader__more,
+.b-feed-loader__new
 {
-    border: 1px dashed #ddd;
+    border: 1px dashed #ccc;
 
     cursor: pointer;
 
@@ -48,16 +49,17 @@
     border-color: transparent;
 }
 
-.b-feed-loader__more span
+.b-feed-loader__more span,
+.b-feed-loader__new span
 {
     color: #3b5998;
 
-    line-height: 42px;
+    line-height: 46px;
 }
 
 .b-feed-loader__more_type_first:hover,
-.b-feed-loader__more_type_next:hover
-
+.b-feed-loader__more_type_next:hover,
+.b-feed-loader__new:hover
 {
     background: #f1f1f1;
 }
