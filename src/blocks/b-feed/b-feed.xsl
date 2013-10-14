@@ -21,13 +21,13 @@
                     <xsl:value-of select="from/name/text()" />
                 </a>
                 <span>
-                    <xsl:value-of select="datetime-humanized/text()" />
+                    <xsl:value-of select="datetime/text()" />
                 </span>
             </div>
 
             <xsl:if test="message/text() != ''">
                 <div class="b-feed__message">
-                    <xsl:value-of select="message/text()" />
+                    <xsl:value-of select="message/text()" disable-output-escaping="yes" />
                 </div>
             </xsl:if>
 

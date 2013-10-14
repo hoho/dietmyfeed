@@ -36,11 +36,31 @@
         <xrl:success select="until | since" />
     </xrl:querystring>
 
-    <xrl:function name="humanize-datetime" type="javascript">
-        <xrl:param name="value" />
+    <xrl:function name="adjust-item" type="javascript">
+        <xrl:param name="item" />
         <![CDATA[
 
-        return new Date(value);
+        var ret = {},
+            tmp;
+
+        if ((tmp = item.message)) {
+            tmp = tmp
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+
+            ret.message = tmp.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$1">$1</a>');
+        }
+
+        ret.from = item.from;
+        ret.type = item.type;
+        ret.link = item.link;
+        ret.picture = item.picture;
+
+        ret.datetime = new Date(item.created_time);
+
+        return ret;
 
         ]]>
     </xrl:function>
@@ -103,6 +123,7 @@
                     <xrl:with-param name="access_token" select="$session-cookie/fb/text()" />
 
                     <xrl:success>
+
                         <!-- Response is a JSON like {"feed": "News feed HTML code"} -->
 
                         <xrl:transform name="json-stringify">
@@ -113,12 +134,12 @@
                                             <b:b-feed>
                                                 <xrl:for-each select="/data">
                                                     <item>
-                                                        <xrl:copy-of select="*" />
-                                                        <datetime-humanized>
-                                                            <xrl:apply name="humanize-datetime">
-                                                                <xrl:with-param name="value" select="created_time/text()" />
-                                                            </xrl:apply>
-                                                        </datetime-humanized>
+                                                        <xrl:apply name="adjust-item">
+                                                            <xrl:with-param name="item" select="*" />
+                                                        </xrl:apply>
+                                                        <tmp>
+                                                            <xrl:copy-of select="." />
+                                                        </tmp>
                                                     </item>
                                                 </xrl:for-each>
                                             </b:b-feed>
