@@ -33,8 +33,18 @@ custom-deps:
 	                                    --http-log-path=/var/log/dietmyfeed/access.log \
 	                                    --error-log-path=/var/log/dietmyfeed/error.log \
 	                                    --pid-path=/var/run/dietmyfeed.pid \
+	                                    --lock-path=/var/run/dietmyfeed.lock \
+	                                    --http-client-body-temp-path=/var/cache/dietmyfeed/client_temp \
+	                                    --http-proxy-temp-path=/var/cache/dietmyfeed/proxy_temp \
+	                                    --http-fastcgi-temp-path=/var/cache/dietmyfeed/fastcgi_temp \
+	                                    --http-uwsgi-temp-path=/var/cache/dietmyfeed/uwsgi_temp \
+	                                    --http-scgi-temp-path=/var/cache/dietmyfeed/scgi_temp \
 	                                    --add-module=../xrlt/nginx/ngx_http_xrlt \
 	                                    --with-http_ssl_module \
+	                                    --with-http_realip_module \
+	                                    --with-http_gzip_static_module \
+	                                    --with-http_secure_link_module \
+	                                    --with-http_stub_status_module \
 	                                    --with-cc-opt="-I/usr/include/libxml2 -I../xrlt/libxrlt" \
 	                                    --with-ld-opt="-L/usr/local/lib -lxml2 -lyajl -lxrlt" \
 	                                    && make
