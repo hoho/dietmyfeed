@@ -21,7 +21,9 @@ download-custom-deps:
 custom-deps:
 	mkdir .build
 	$(MAKE) -C .deps/v8 native -j8 OUTDIR=../../.build/v8 library=shared
-	cp .build/v8/native/libv8.so /usr/local/lib
+	cp .build/v8/native/obj.target/tools/gyp/libv8.so /usr/local/lib
+	cp .build/v8/native/lib.target/libicui18n.so /usr/local/lib
+	cp .build/v8/native/lib.target/libicuuc.so /usr/local/lib
 	cp .deps/v8/include/v8* /usr/local/include
 	cd .deps/yajl && ./configure
 	$(MAKE) -C .deps/yajl install
