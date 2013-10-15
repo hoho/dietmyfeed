@@ -55,6 +55,7 @@ custom-deps:
 install: buildwww
 	$(MAKE) -C .deps/nginx-1.4.2 install
 	mkdir -p /var/log/dietmyfeed
+	mkdir -p /var/cache/dietmyfeed
 	mkdir -p /etc/dietmyfeed
 	cp nginx/nginx.conf /etc/dietmyfeed/nginx.conf
 
