@@ -1,0 +1,90 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          nginx
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the nginx web server
+# Description:       starts nginx using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/local/dietmyfeed/bin/nginx
+NAME=dietmyfeed
+DESC=dietmyfeed
+
+test -x $DAEMON || exit 0
+
+case "$1" in
+    start)
+        echo -n "Starting $DESC: "
+        start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
+                --exec $DAEMON
+        echo "$NAME."
+        ;;
+    stop)
+        echo -n "Stopping $DESC: "
+        start-stop-daemon --stop --quiet --pidfile /var/run/$NAME.pid \
+                --exec $DAEMON
+        if [ -n "`pgrep -f 'nginx: '`" ] ; then
+            kill -9 `pgrep -f 'nginx: '` > /dev/null 2>&1 || :
+        fi
+        echo "$NAME."
+        ;;
+    restart|force-reload)
+        echo -n "Restarting $DESC: "
+
+        if [ -f /var/run/$NAME.pid ]; then
+            PID=$(cat /var/run/$NAME.pid)
+        fi
+
+        if [ -z "$PID" ]; then
+            if [ -n "`pgrep -f 'nginx: '`" ] ; then
+                kill -9 `pgrep -f 'nginx: '` > /dev/null 2>&1 || :
+            fi
+            start-stop-daemon --start --quiet --pidfile \
+                    /var/run/$NAME.pid --exec $DAEMON
+            echo "$NAME."
+        else
+            start-stop-daemon --stop --quiet --pidfile \
+                    /var/run/$NAME.pid --exec $DAEMON || true
+
+            for i in `seq 0 9`; do
+                pgrep -f "nginx: " > /dev/null && sleep 1 || break;
+            done
+
+            if [ $i -eq 9 ]; then
+                kill -9 `pgrep -f 'nginx: '` > /dev/null 2>&1 || :
+            fi
+
+            start-stop-daemon --start --quiet --pidfile \
+                    /var/run/$NAME.pid --exec $DAEMON
+            echo "$NAME."
+        fi
+        ;;
+
+    reload)
+        echo -n "Reloading $DESC configuration: "
+        start-stop-daemon --stop --signal HUP --quiet --pidfile /var/run/$NAME.pid \
+                --exec $DAEMON
+        echo "$NAME."
+        ;;
+    logrotate)
+        echo -n "Rotating $DESC logs: "
+        start-stop-daemon --stop --signal USR1 --quiet --pidfile /var/run/$NAME.pid \
+                --exec $DAEMON || true
+        echo "$NAME."
+        ;;
+    status)
+        status_of_proc -p /var/run/$NAME.pid "$DAEMON" nginx && exit 0 || exit $?
+        ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|reload|force-reload|logrotate|status}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

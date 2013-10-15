@@ -58,6 +58,7 @@ install: buildwww
 	mkdir -p /var/cache/dietmyfeed
 	mkdir -p /etc/dietmyfeed
 	cp nginx/nginx.conf /etc/dietmyfeed/nginx.conf
+	cp nginx/dietmyfeed /etc/init.d/dietmyfeed
 
 buildwww:
 	rm -rf .www
