@@ -6,9 +6,12 @@
         xmlns:m="http://xslc.org/XBEM/Modifier"
         exclude-result-prefixes="b e m">
 
+    <xsl:key name="user-by-id" match="/b:b-feed/user" use="uid/text()" />
+
+
     <xsl:template match="b:b-feed">
         <ul class="b-feed">
-            <xsl:apply-templates select="item" />
+            <xsl:apply-templates select="item[type != '347']" />
         </ul>
     </xsl:template>
 
@@ -16,14 +19,21 @@
     <xsl:template match="b:b-feed/item">
         <li class="b-feed__item">
             <div class="b-feed__head">
-                <img src="{from/picture/data/url/text()}" />
-                <a href="{from/link/text()}">
-                    <xsl:value-of select="from/name/text()" />
+                <xsl:variable name="user" select="key('user-by-id', actor_id/text())" />
+                <img src="{$user/pic_square/text()}" />
+                <a href="{$user/profile_url/text()}">
+                    <xsl:value-of select="$user/name/text()" />
                 </a>
                 <span>
-                    <xsl:value-of select="datetime/text()" />
+                    <xsl:value-of select="created_time/text()" />
                 </span>
             </div>
+
+            <xsl:if test="description/text() != ''">
+                <div class="b-feed__description">
+                    <xsl:value-of select="description/text()" disable-output-escaping="yes" />
+                </div>
+            </xsl:if>
 
             <xsl:if test="message/text() != ''">
                 <div class="b-feed__message">
@@ -31,33 +41,7 @@
                 </div>
             </xsl:if>
 
-            <xsl:choose>
-                <xsl:when test="type/text() = 'photo'">
-                    <div class="b-feed__photo">
-                        <a href="{link/text()}">
-                            <img>
-                                <xsl:attribute name="src">
-                                    <xsl:choose>
-                                        <xsl:when test="substring-before(picture/text(), '_s.') != ''">
-                                            <xsl:value-of select="substring-before(picture/text(), '_s.')" />
-                                            <xsl:text>_n.</xsl:text>
-                                            <xsl:value-of select="substring-after(picture/text(), '_s.')" />
-                                        </xsl:when>
-
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="picture/text()" />
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:attribute>
-                            </img>
-                        </a>
-                    </div>
-                </xsl:when>
-
-                <xsl:otherwise>
-                    <div class="b-feed__placeholder">Here be dragons: <xsl:value-of select="type/text()" /></div>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:apply-templates select="attachment[media/type]" />
 
             <div class="b-feed__actions">
 
@@ -67,6 +51,35 @@
                 <xsl:copy-of select="node()" />
             </div>-->
         </li>
+    </xsl:template>
+
+
+    <xsl:template match="attachment">
+        <xsl:choose>
+            <xsl:when test="media/type/text() = 'photo'">
+                <div class="b-feed__photo">
+                    <a href="{media/href/text()}">
+                        <img src="{media/src/text()}" />
+                    </a>
+                </div>
+            </xsl:when>
+            <xsl:when test="media/type/text() = 'link'">
+                <table class="b-feed__link">
+                    <tr>
+                        <td class="b-feed__link-img">
+                            <img src="{media/src/text()}" />
+                        </td>
+                        <td>
+                            <a href="{href/text()}"><xsl:value-of select="name/text()" /></a>
+                            <p><xsl:value-of select="description/text()" /></p>
+                        </td>
+                    </tr>
+                </table>
+            </xsl:when>
+            <xsl:otherwise>
+                <div class="b-feed__placeholder">Here be dragons: <xsl:value-of select="media/type/text()" /></div>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
