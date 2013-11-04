@@ -67,7 +67,7 @@
             if (obj instanceof Object) {
                 var copy = {};
                 for (var name in obj) {
-                    if (name === 'created_time') {
+                    if (name === 'created_time' || name === 'updated_time') {
                         copy[name] = new Date(parseInt(obj[name], 10) * 1000);
                     } else if (name in textFields) {
                         copy[name] = (obj[name] || '')
@@ -94,8 +94,8 @@
         };
 
         if (ret.item && ret.item.length) {
-            ret.since = ret.item[0].created_time.getTime() / 1000;
-            ret.until = ret.item[ret.item.length - 1].created_time.getTime() / 1000;
+            ret.since = ret.item[0].updated_time.getTime() / 1000;
+            ret.until = ret.item[ret.item.length - 1].updated_time.getTime() / 1000;
         }
 
         return ret;
@@ -151,10 +151,10 @@
 
                     <xrl:with-param name="q">
                         <xrl:transform name="json-stringify">
-                            <feed>SELECT post_id, type, actor_id, created_time, action_links, target_id, message, description, attachment, like_info, comment_info FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid = me() AND type = 'newsfeed') AND is_hidden = 0 <xrl:choose>
+                            <feed>SELECT post_id, type, actor_id, created_time, updated_time, action_links, target_id, message, description, attachment, like_info, comment_info FROM stream WHERE filter_key in (SELECT filter_key FROM stream_filter WHERE uid = me() AND type = 'newsfeed') AND is_hidden = 0 <xrl:choose>
                                 <xrl:when test="$GET/since"> AND created_time &gt; <xrl:value-of select="$GET/since/text()" /></xrl:when>
                                 <xrl:when test="$GET/until"> AND created_time &lt; <xrl:value-of select="$GET/until/text()" /></xrl:when>
-                            </xrl:choose> ORDER BY created_time DESC</feed>
+                            </xrl:choose> ORDER BY updated_time DESC</feed>
                             <pages>SELECT page_id, name, pic_square, page_url FROM page WHERE page_id IN (SELECT actor_id FROM #feed)</pages>
                             <users>SELECT uid, name, pic_square, profile_url FROM user WHERE uid IN (SELECT actor_id FROM #feed)</users>
                         </xrl:transform>
