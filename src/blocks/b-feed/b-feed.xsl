@@ -24,16 +24,13 @@
                 <a href="{$user/profile_url/text()}">
                     <xsl:value-of select="$user/name/text()" />
                 </a>
+                <xsl:if test="substring(description/text(), 1, string-length($user/name/text())) = $user/name/text()">
+                    <xsl:value-of select="substring(description/text(), string-length($user/name/text()) + 1)" disable-output-escaping="yes" />
+                </xsl:if>
                 <span>
                     <xsl:value-of select="created_time/text()" />
                 </span>
             </div>
-
-            <xsl:if test="description/text() != ''">
-                <div class="b-feed__description">
-                    <xsl:value-of select="description/text()" disable-output-escaping="yes" />
-                </div>
-            </xsl:if>
 
             <xsl:if test="message/text() != ''">
                 <div class="b-feed__message">
