@@ -20,16 +20,16 @@
         <li class="b-feed__item">
             <div class="b-feed__head">
                 <xsl:variable name="user" select="key('user-by-id', actor_id/text())" />
-                <img src="{$user/pic_square/text()}" />
+                <img src="{$user/pic_square/text()}" width="50" height="50" />
+                <span>
+                    <xsl:value-of select="created_time/text()" />
+                </span>
                 <a href="{$user/profile_url/text()}">
                     <xsl:value-of select="$user/name/text()" />
                 </a>
                 <xsl:if test="substring(description/text(), 1, string-length($user/name/text())) = $user/name/text()">
                     <xsl:value-of select="substring(description/text(), string-length($user/name/text()) + 1)" disable-output-escaping="yes" />
                 </xsl:if>
-                <span>
-                    <xsl:value-of select="created_time/text()" />
-                </span>
             </div>
 
             <xsl:if test="message/text() != ''">
@@ -56,7 +56,16 @@
             <xsl:when test="media/type/text() = 'photo'">
                 <div class="b-feed__photo">
                     <a href="{media/href/text()}">
-                        <img src="{media/src/text()}" />
+                        <img src="{media/src/text()}">
+                            <xsl:if test="media/photo[width/text() != '' and height/text() != '']">
+                                <xsl:attribute name="width">
+                                    <xsl:value-of select="media/photo/width/text()" />
+                                </xsl:attribute>
+                                <xsl:attribute name="height">
+                                    <xsl:value-of select="media/photo/height/text()" />
+                                </xsl:attribute>
+                            </xsl:if>
+                        </img>
                     </a>
                 </div>
             </xsl:when>
