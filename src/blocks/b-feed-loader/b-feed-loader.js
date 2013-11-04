@@ -4,6 +4,8 @@ $.BEM.decl('b-feed-loader')
 
         var self = this;
 
+        self.tz = $(document.body).data('tz');
+
         self.updates = [];
 
         self.more = self.$.find('%b-feed-loader(more)');
@@ -46,7 +48,7 @@ $.BEM.decl('b-feed-loader')
         }
 
         $.ajax({
-            url: '/~/feed' + (update && self.since ? '?since=' + self.since : (self.until ? '?until=' + self.until : '')),
+            url: '/~/feed?tz=' + self.tz + (update && self.since ? '&since=' + self.since : (self.until ? '&until=' + self.until : '')),
             type: 'POST',
             dataType: 'json',
             success: function(data) {

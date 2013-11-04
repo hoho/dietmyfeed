@@ -8,27 +8,36 @@
     <xrl:transformation name="feed-html" type="xslt-stringify" src="feed.xsl" />
     <xrl:transformation name="fuck" type="xml-stringify" />
 
-    <xrl:function name="check-times" type="javascript">
+    <xrl:function name="check-times-and-tz" type="javascript">
         <xrl:param name="since" />
         <xrl:param name="until" />
+        <xrl:param name="tz" />
 
         <![CDATA[
 
-        var maxTime = (new Date()).getTime() / 1000 + 86400;
+        var maxTime = (new Date()).getTime() / 1000 + 86400,
+            ret = {};
+
+        tz = parseInt(tz, 10);
+        if (tz >= -12 && tz <= 14) {
+            ret.tz = tz * 60;
+        }
 
         since = parseInt(since, 10);
 
         // Checking that our time is between 2007 and now + one day.
 
         if (since > 1167609600 && since < maxTime) {
-            return {since: since};
+            ret.since = since;
+        } else {
+            until = parseInt(until, 10);
+
+            if (until > 1167609600 && until < maxTime) {
+                ret.until = until;
+            }
         }
 
-        until = parseInt(until, 10);
-
-        if (until > 1167609600 && until < maxTime) {
-            return {until: until};
-        }
+        return ret;
 
         ]]>
     </xrl:function>
@@ -36,9 +45,10 @@
 
     <xrl:querystring name="GET" type="querystring">
         <xrl:success>
-            <xrl:apply name="check-times">
+            <xrl:apply name="check-times-and-tz">
                 <xrl:with-param name="since" select="since/text()" />
                 <xrl:with-param name="until" select="until/text()" />
+                <xrl:with-param name="tz" select="tz/text()" />
             </xrl:apply>
         </xrl:success>
     </xrl:querystring>
@@ -46,9 +56,38 @@
 
     <xrl:function name="adjust-feed" type="javascript">
         <xrl:param name="data" />
+        <xrl:param name="tz" select="$GET/tz/text()" />
         <![CDATA[
 
-        var textFields = {message: true, description: true};
+        tz = parseInt(tz) || 0;
+
+        var textFields = {message: true, description: true},
+            minTime,
+            maxTime,
+            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            tmp;
+
+        function datetimeToStr(date) {
+            // XXX: This is ugly. Do something with it.
+            date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + tz);
+            date = [
+                date.getHours(),
+                ':',
+                date.getMinutes(),
+                ', ',
+                months[date.getMonth()],
+                ' ',
+                date.getDate(),
+                ' ',
+                date.getFullYear()
+            ];
+
+            if (date[0] < 10) { date[0] = '0' + date[0]; }
+            if (date[2] < 10) { date[2] = '0' + date[2]; }
+
+            return date.join('');
+        }
 
         function clone(obj) {
 
@@ -67,8 +106,20 @@
             if (obj instanceof Object) {
                 var copy = {};
                 for (var name in obj) {
-                    if (name === 'created_time' || name === 'updated_time') {
-                        copy[name] = new Date(parseInt(obj[name], 10) * 1000);
+                    if (name === 'created_time') {
+                        copy[name] = datetimeToStr(new Date(parseInt(obj[name], 10) * 1000));
+                    } else if (name === 'updated_time') {
+                        tmp = obj[name];
+
+                        if (tmp && (!minTime || tmp < minTime)) {
+                            minTime = tmp;
+                        }
+
+                        if (tmp && (!maxTime || tmp > maxTime)) {
+                            maxTime = tmp;
+                        }
+
+                        copy[name] = tmp;
                     } else if (name in textFields) {
                         copy[name] = (obj[name] || '')
                             .replace(/&/g, '&amp;')
@@ -93,9 +144,9 @@
             user: data[2].fql_result_set
         };
 
-        if (ret.item && ret.item.length) {
-            ret.since = ret.item[0].updated_time.getTime() / 1000;
-            ret.until = ret.item[ret.item.length - 1].updated_time.getTime() / 1000;
+        if (minTime && maxTime) {
+            ret.since = maxTime;
+            ret.until = minTime;
         }
 
         return ret;
@@ -110,44 +161,9 @@
         <xrl:choose>
             <xrl:when test="$session-cookie/fb/text()">
                 <xrl:include>
-                    <!-- /me/home?fields=created_time,updated_time,id,type,from.fields(name,link,picture),description,is_hidden,link,story,message,name,picture,via,caption,properties,comments.fields(message,attachment,like_count,from.fields(name,link,picture)),likes -->
                     <xrl:href>/fb/fql</xrl:href>
                     <xrl:type>json</xrl:type>
                     <xrl:method>GET</xrl:method>
-
-                    <!--<xrl:with-param name="fields">
-                        <xrl:text>created_time,</xrl:text>
-                        <xrl:text>updated_time,</xrl:text>
-                        <xrl:text>id,</xrl:text>
-                        <xrl:text>type,</xrl:text>
-                        <xrl:text>from.fields(name,link,picture),</xrl:text>
-                        <xrl:text>description,</xrl:text>
-                        <xrl:text>is_hidden,</xrl:text>
-                        <xrl:text>link,</xrl:text>
-                        <xrl:text>story,</xrl:text>
-                        <xrl:text>message,</xrl:text>
-                        <xrl:text>name,</xrl:text>
-                        <xrl:text>picture,</xrl:text>
-                        <xrl:text>via,</xrl:text>
-                        <xrl:text>caption,</xrl:text>
-                        <xrl:text>properties,</xrl:text>
-                        <xrl:text>comments.fields(</xrl:text>
-                        <xrl:text>message,</xrl:text>
-                        <xrl:text>attachment,</xrl:text>
-                        <xrl:text>like_count,</xrl:text>
-                        <xrl:text>from.fields(name,link,picture)</xrl:text>
-                        <xrl:text>),</xrl:text>
-                        <xrl:text>likes</xrl:text>
-                    </xrl:with-param>-->
-
-                    <!--
-                    <xrl:with-param test="$GET/since" name="since"><xrl:value-of select="$GET/since/text()" /></xrl:with-param>
-                    <xrl:with-param test="$GET/since" name="__previous">1</xrl:with-param>
-
-                    <xrl:with-param test="$GET/until" name="until"><xrl:value-of select="$GET/until/text()" /></xrl:with-param>
-                    <xrl:with-param name="limit">25</xrl:with-param>
-                    -->
-
 
                     <xrl:with-param name="q">
                         <xrl:transform name="json-stringify">
@@ -166,7 +182,6 @@
                     <xrl:with-param name="access_token" select="$session-cookie/fb/text()" />
 
                     <xrl:success>
-
                         <!-- Response is a JSON like {"feed": "News feed HTML code"} -->
 
                         <xrl:transform name="json-stringify">
