@@ -12,8 +12,7 @@ $(function() {
         dirY = 1,
         imgX = 0,
         imgY = 0,
-        stepX = screen.availWidth / 200,
-        stepY = screen.availHeight / 300,
+        prevTime = (new Date()).getTime(),
 
         moveCover = function(pageX, pageY) {
             if (!coverImgHeight) {
@@ -22,7 +21,12 @@ $(function() {
 
             var changed,
                 moveHeight = Math.ceil(coverImgHeight / 2) - 100,
-                step = pageX - curX;
+                step = pageX - curX,
+                now = (new Date()).getTime();
+
+            if (abs(now - prevTime) < 30) {
+                return;
+            }
 
             if (!deltaX) {
                 deltaX = 6 / (wnd.width() * 0.06);
@@ -31,7 +35,7 @@ $(function() {
                 }
             }
 
-            if (abs(step) > stepX) {
+            if (abs(step) > 0) {
                 imgX += dirX * (step < 0 ? deltaX : -deltaX);
 
                 if (abs(imgX) > 3) {
@@ -46,7 +50,7 @@ $(function() {
 
             step = pageY - curY;
 
-            if (abs(step) > stepY) {
+            if (abs(step) > 0) {
                 imgY += dirY * (step < 0 ? 1 : -1);
 
                 if (abs(imgY) > moveHeight) {
@@ -60,6 +64,7 @@ $(function() {
             }
 
             if (changed) {
+                prevTime = now;
                 window.requestAnimationFrame(function() {
                     coverImgWrapperStyle.left = -3 + imgX + '%';
                     coverImgWrapperStyle.top = -1000 + imgY + 'px';
@@ -77,6 +82,6 @@ $(function() {
         .on('resize',
             function() {
                 deltaX = coverImgHeight = 0;
-                moveCover(curX + stepX + 1, curY + stepY + 1);
+                moveCover(curX + 1, curY + 1);
             });
 });
