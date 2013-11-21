@@ -15,8 +15,8 @@ download-custom-deps:
 	git clone https://github.com/v8/v8.git .deps/v8 && cd .deps/v8 && git checkout 3.22.8
 	$(MAKE) -C .deps/v8 dependencies
 	git clone https://github.com/lloyd/yajl.git .deps/yajl
-	curl -o .deps/nginx-1.4.2.tar.gz http://nginx.org/download/nginx-1.4.2.tar.gz
-	cd .deps && tar -xzvf nginx-1.4.2.tar.gz
+	curl -o .deps/nginx-1.4.4.tar.gz http://nginx.org/download/nginx-1.4.4.tar.gz
+	cd .deps && tar -xzvf nginx-1.4.4.tar.gz
 
 custom-deps:
 	mkdir .build
@@ -29,7 +29,7 @@ custom-deps:
 	$(MAKE) -C .deps/yajl install
 	$(MAKE) -C .deps/xrlt/libxrlt
 	$(MAKE) -C .deps/xrlt/libxrlt install
-	cd .deps/nginx-1.4.2 && ./configure --prefix=/usr/local/dietmyfeed/nginx \
+	cd .deps/nginx-1.4.4 && ./configure --prefix=/usr/local/dietmyfeed/nginx \
 	                                    --conf-path=/etc/dietmyfeed/nginx.conf \
 	                                    --sbin-path=/usr/local/dietmyfeed/bin/nginx \
 	                                    --http-log-path=/var/log/dietmyfeed/access.log \
@@ -53,7 +53,7 @@ custom-deps:
 	easy_install xbem
 
 install: buildwww
-	$(MAKE) -C .deps/nginx-1.4.2 install
+	$(MAKE) -C .deps/nginx-1.4.4 install
 	mkdir -p /var/log/dietmyfeed
 	mkdir -p /var/cache/dietmyfeed
 	mkdir -p /etc/dietmyfeed
