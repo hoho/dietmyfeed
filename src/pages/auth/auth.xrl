@@ -64,7 +64,7 @@
         <xrl:param name="fb-token" />
         <xrl:param name="auth-random" />
 
-        <xrl:response-cookie name="dietmyfeed" domain="dietmyfeed.com" path="/" httponly="yes">
+        <xrl:response-cookie name="dietmyfeed" domain="dietmyfeed.com" path="/" httponly="yes" secure="yes">
             <xrl:apply name="new-session-cookie-value">
                 <xrl:with-param name="fb-token" select="$fb-token" />
                 <xrl:with-param name="auth-random" select="$auth-random" />
