@@ -66,9 +66,9 @@
                                 </e:title>
 
                                 <e:menu b:block="b-page">
+                                    <e:menu-item b:block="b-page" href="/off" m:log-off="">Log off</e:menu-item>
                                     <e:menu-item b:block="b-page" href="/">News</e:menu-item>
                                     <e:menu-item b:block="b-page" href="/about">About</e:menu-item>
-                                    <e:menu-item b:block="b-page" href="/off" m:log-off="">Log off</e:menu-item>
                                 </e:menu>
 
                                 <e:avatar b:block="b-page">
