@@ -3,32 +3,21 @@ help:
 
 clean:
 	rm -rf .deps
-	rm -rf .build
 	rm -rf .www
 
 apt-get-deps:
 	apt-get install git subversion g++ make libxml2-dev libxslt-dev ruby cmake curl libpcre3 libpcre3-dev libssl-dev python-setuptools
 
 download-custom-deps:
-	mkdir .deps
+	mkdir -p .deps
 	git clone https://github.com/hoho/xrlt.git .deps/xrlt
-	git clone https://github.com/v8/v8.git .deps/v8 && cd .deps/v8 && git checkout 3.22.8
-	$(MAKE) -C .deps/v8 dependencies
-	git clone https://github.com/lloyd/yajl.git .deps/yajl
+	cd .deps/xrlt && git submodule init && git submodule update
 	curl -o .deps/nginx-1.4.7.tar.gz http://nginx.org/download/nginx-1.4.7.tar.gz
 	cd .deps && tar -xzvf nginx-1.4.7.tar.gz
 
 custom-deps:
-	mkdir .build
-	$(MAKE) -C .deps/v8 native -j8 OUTDIR=../../.build/v8 library=shared
-	cp .build/v8/native/obj.target/tools/gyp/libv8.so /usr/local/lib
-	cp .build/v8/native/lib.target/libicui18n.so /usr/local/lib
-	cp .build/v8/native/lib.target/libicuuc.so /usr/local/lib
-	cp .deps/v8/include/v8* /usr/local/include
-	cd .deps/yajl && ./configure
-	$(MAKE) -C .deps/yajl install
-	$(MAKE) -C .deps/xrlt/libxrlt
-	$(MAKE) -C .deps/xrlt/libxrlt install
+	cd .deps/xrlt/libxrlt && ./configure && $(MAKE)
+	sudo cp .deps/xrlt/libxrlt/out/Release/libxrlt.* /usr/local/lib
 	cd .deps/nginx-1.4.7 && ./configure --prefix=/usr/local/dietmyfeed/nginx \
 	                                    --conf-path=/etc/dietmyfeed/nginx.conf \
 	                                    --sbin-path=/usr/local/dietmyfeed/bin/nginx \
@@ -48,9 +37,9 @@ custom-deps:
 	                                    --with-http_secure_link_module \
 	                                    --with-http_stub_status_module \
 	                                    --with-cc-opt="-I/usr/include/libxml2 -I../xrlt/libxrlt" \
-	                                    --with-ld-opt="-L/usr/local/lib -lxml2 -lyajl -lxrlt" \
+	                                    --with-ld-opt="-L/usr/local/lib -lxml2 -lxrlt" \
 	                                    && make
-	easy_install xbem
+	sudo easy_install xbem
 
 install: buildwww
 	$(MAKE) -C .deps/nginx-1.4.7 install
