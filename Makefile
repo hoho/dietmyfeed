@@ -6,7 +6,7 @@ clean:
 	rm -rf .www
 
 apt-get-deps:
-	apt-get install git subversion g++ make libxml2-dev libxslt-dev ruby cmake curl libpcre3 libpcre3-dev libssl-dev python-setuptools
+	apt-get install git subversion g++ make ruby cmake curl libpcre3 libpcre3-dev libssl-dev python-setuptools autoconf libtool
 
 download-custom-deps:
 	mkdir -p .deps
@@ -36,8 +36,8 @@ custom-deps:
 	                                    --with-http_gzip_static_module \
 	                                    --with-http_secure_link_module \
 	                                    --with-http_stub_status_module \
-	                                    --with-cc-opt="-I/usr/include/libxml2 -I../xrlt/libxrlt" \
-	                                    --with-ld-opt="-L/usr/local/lib -lxml2 -lxrlt" \
+	                                    --with-cc-opt="-I../xrlt/libxrlt/deps/libxml/include -I../xrlt/libxrlt" \
+	                                    --with-ld-opt="-L/usr/local/lib -lxrlt" \
 	                                    && make
 	sudo easy_install xbem
 
